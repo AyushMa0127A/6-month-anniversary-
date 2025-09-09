@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Photo Gallery</title>
+    <style>
+        body {
+            /* Set the background image */
+            background-image: url('back.jpg');
+            /* Make the background image cover the entire page */
+            background-size: cover;
+            /* Center the background image */
+            background-position: center;
+            /* Fix the background image so it doesn't scroll with the content */
+            background-attachment: fixed;
+            /* Add an overlay to make text more readable */
+            background-color: rgba(0, 0, 0, 0.5); 
+            background-blend-mode: darken; /* Darken the image */
+
+            color: #fff;
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        
+        /* The HOME button styling with a constant glow */
+        .home-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 10px 15px;
+            background-color: black;
+            color: #b8860b; /* Dark gold text color */
+            text-decoration: none;
+            border: none; /* Removed the border for a cleaner look */
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+            z-index: 1000;
+            /* The constant glow effect using a non-animated box-shadow */
+            box-shadow: 0 0 20px #FFD700, inset 0 0 10px #FFD700;
+        }
+
+        .home-button:hover {
+            background-color: rgba(51, 51, 51, 0.8);
+        }
+
+        .gallery-container {
+            width: 100%;
+            max-width: 800px;
+            padding: 20px;
+            box-sizing: border-box;
+            /* Enable vertical scrolling */
+            overflow-y: scroll;
+            /* Hide horizontal scrollbar */
+            overflow-x: hidden;
+            /* Make the container take up a good portion of the screen */
+            height: 90vh;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            scrollbar-width: thin; /* For Firefox */
+            scrollbar-color: #555 #222; /* For Firefox */
+        }
+        
+        /* Webkit-based browsers (Chrome, Safari) scrollbar styles */
+        .gallery-container::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .gallery-container::-webkit-scrollbar-track {
+            background: #222;
+            border-radius: 10px;
+        }
+
+        .gallery-container::-webkit-scrollbar-thumb {
+            background-color: #555;
+            border-radius: 10px;
+            border: 2px solid #222;
+        }
+
+        img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+            transition: transform 0.2s ease-in-out;
+        }
+        
+        img:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+
+    <a href="main2.html" class="home-button">HOME</a>
+
+    <div class="gallery-container">
+        <!-- Replace "pic1.jpg", "pic2.jpg", etc. with the actual file paths of your images. -->
+        <!-- For this to work, the images need to be in the same folder as this HTML file. -->
+        <img src="image_6.jpg" alt="A photo from my collection">
+        <img src="picG1jpg" alt="A photo from my collection">
+        <img src="picG2.jpg" alt="A photo from my collection">
+        <img src="picG3.jpg" alt="A photo from my collection">
+        <img src="picG4.jpg" alt="A photo from my collection">
+
+        <!-- You can copy and paste the img tag to add more photos -->
+        <!-- <img src="pic4.jpg" alt="Another photo"> -->
+    </div>
+
+</body>
+</html>
