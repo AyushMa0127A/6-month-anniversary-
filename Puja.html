@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Photo Gallery</title>
+    <style>
+        body {
+            background-image: url('back.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-color: rgba(0, 0, 0, 0.5); 
+            background-blend-mode: darken;
+            color: #fff;
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+       
+        .home-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 10px 15px;
+            background-color: black;
+            color: #b8860b;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            z-index: 1000;
+            box-shadow: 0 0 20px #FFD700, inset 0 0 10px #FFD700;
+        }
+
+        .gallery-container {
+            width: 100%;
+            max-width: 800px;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-y: scroll;
+            overflow-x: hidden;
+            height: 90vh;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            scrollbar-width: thin;
+            scrollbar-color: #555 #222;
+        }
+        
+        .gallery-container::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .gallery-container::-webkit-scrollbar-track {
+            background: #222;
+            border-radius: 10px;
+        }
+
+        .gallery-container::-webkit-scrollbar-thumb {
+            background-color: #555;
+            border-radius: 10px;
+            border: 2px solid #222;
+        }
+
+        img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+            transition: transform 0.2s ease-in-out;
+        }
+        
+        img:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+
+    <a href="main2.html" class="home-button">HOME</a>
+
+    <div class="gallery-container">
+        <img src="puja1.jpg" alt="A photo from my collection">
+        <img src="puja2.jpg" alt="A photo from my collection">
+        <img src="puja3.jpg" alt="A photo from my collection">
+        <img src="puja4.jpg" alt="A photo from my collection">
+        <img src="puja5.jpg" alt="A photo from my collection">
+        <img src="puja6.jpg" alt="A photo from my collection">
+        <img src="puja7.jpg" alt="A photo from my collection">
+        <img src="puja8.jpg" alt="A photo from my collection">
+        <img src="puja9.jpg" alt="A photo from my collection">
+    </div>
+
+</body>
+</html>
