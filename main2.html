@@ -5,16 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Photo Gallery</title>
     <style>
+        /* A universal box-sizing rule for consistent layout behavior */
         *, *::before, *::after {
             box-sizing: border-box;
         }
 
         body {
+            /* Set a fallback color in case the background image doesn't load */
             background-color: #333;
             background-image: url('back.jpg');
-            background-repeat: repeat;
-            background-size: auto;
-            background-attachment: scroll;
+            background-size: cover;
+            background-position: center;
+            /* This is the key change to fix the background */
+            background-attachment: fixed;
             font-family: 'Arial', sans-serif;
             margin: 0;
             display: flex;
@@ -46,6 +49,7 @@
             transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
         }
         
+        /* Add a hover effect for a more interactive feel */
         .photo-box:hover {
             transform: translateY(-5px);
             box-shadow: 0 8px 16px rgba(255, 255, 255, 0.3);
@@ -126,33 +130,3 @@
 
 </body>
 </html>
-        </a>
-        <a href="4thmonth.html" class="photo-link">
-            <div class="photo-box">
-                <p>4th month</p>
-                <img src="image_4.jpg" alt="Photo's from the 4th month">
-            </div>
-        </a>
-        <a href="5thmonth.html" class="photo-link">
-            <div class="photo-box">
-                <p>5th month</p>
-                <img src="picF11.jpg" alt="Photo's from the 5th month">
-            </div>
-        </a>
-        <a href="6thmonth.html" class="photo-link">
-            <div class="photo-box">
-                <p>6th month</p>
-                <img src="image_6.jpg" alt="Photo's from the 6th month">
-            </div>
-        </a>
-        <a href="Puja.html" class="photo-link">
-            <div class="photo-box">
-                <p>Puja's 2k25</p>
-                <img src="puja1.jpg" alt="Photo's of Puja">
-            </div>
-        </a>
-    </div>
-
-</body>
-</html>
-
