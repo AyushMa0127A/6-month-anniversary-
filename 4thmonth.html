@@ -4,125 +4,361 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Photo Gallery</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        /* 1. Background upgrade */
         body {
-            /* Set the background image */
-            background-image: url('back.jpg');
-            /* Make the background image cover the entire page */
-            background-size: cover;
-            /* Center the background image */
-            background-position: center;
-            /* Fix the background image so it doesn't scroll with the content */
+            background: linear-gradient(135deg, #FFC0CB, #FADADD);
             background-attachment: fixed;
-            /* Add an overlay to make text more readable */
-            background-color: rgba(0, 0, 0, 0.5); 
-            background-blend-mode: darken; /* Darken the image */
-
-            color: #fff;
-            font-family: sans-serif;
+            font-family: 'Arial', sans-serif;
             margin: 0;
-            padding: 0;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
             min-height: 100vh;
+            color: #333;
+            padding: 20px 0 50px;
+            overflow-x: hidden;
+            position: relative;
         }
-        
-        /* The HOME button styling with a constant glow */
-        .home-button {
+
+        /* 3. Subtle animation (Floating hearts) */
+        .hearts-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 20px;
+            color: rgba(255, 105, 180, 0.5);
+            animation: float 10s ease-in-out infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            50% { opacity: 0.5; }
+            100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+        }
+
+        /* 4. Title/Header style */
+        .page-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3rem;
+            color: #FF69B4;
+            text-shadow: 0 0 10px rgba(255, 105, 180, 0.7);
+            margin-bottom: 20px;
+            text-align: center;
+            padding-top: 50px;
+        }
+
+        /* Button container for positioning */
+        .button-container {
             position: fixed;
             top: 20px;
             left: 20px;
-            padding: 10px 15px;
-            background-color: black;
-            color: #b8860b; /* Dark gold text color */
-            text-decoration: none;
-            border: none; /* Removed the border for a cleaner look */
-            border-radius: 5px;
-            font-weight: bold;
-            z-index: 1000;
-            /* The constant glow effect using a non-animated box-shadow */
-            box-shadow: 0 0 20px #FFD700, inset 0 0 10px #FFD700;
-        }
-
-        .home-button:hover {
-            background-color: rgba(51, 51, 51, 0.8);
-        }
-
-        .gallery-container {
-            width: 100%;
-            max-width: 800px;
-            padding: 20px;
-            box-sizing: border-box;
-            /* Enable vertical scrolling */
-            overflow-y: scroll;
-            /* Hide horizontal scrollbar */
-            overflow-x: hidden;
-            /* Make the container take up a good portion of the screen */
-            height: 90vh;
+            right: 20px;
             display: flex;
-            flex-direction: column;
-            gap: 20px;
-            scrollbar-width: thin; /* For Firefox */
-            scrollbar-color: #555 #222; /* For Firefox */
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        /* Home Button Styles */
+        .home-button {
+            padding: 10px 25px;
+            text-decoration: none;
+            border: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            background: linear-gradient(45deg, #FF6B6B, #FADADD);
+            color: #fff;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.2rem;
+            box-shadow: 0 0 15px rgba(255, 105, 180, 0.8),
+                        0 5px 15px rgba(0, 0, 0, 0.2);
         }
         
-        /* Webkit-based browsers (Chrome, Safari) scrollbar styles */
-        .gallery-container::-webkit-scrollbar {
-            width: 8px;
+        .home-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 25px rgba(255, 105, 180, 1),
+                        0 8px 20px rgba(0, 0, 0, 0.3);
         }
 
-        .gallery-container::-webkit-scrollbar-track {
-            background: #222;
-            border-radius: 10px;
-        }
-
-        .gallery-container::-webkit-scrollbar-thumb {
-            background-color: #555;
-            border-radius: 10px;
-            border: 2px solid #222;
-        }
-
-        img {
-            width: 100%;
-            height: auto;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+        /* Music Toggle Button Styles */
+        #music-toggle-btn {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
             transition: transform 0.2s ease-in-out;
         }
-        
-        img:hover {
-            transform: scale(1.05);
+
+        .play-btn-circle {
+            background-color: rgba(255, 255, 255, 0.7);
+            border: 2px solid #FF6B6B;
+            border-radius: 50%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
         }
+        
+        #music-toggle-btn:hover .play-btn-circle {
+            transform: scale(1.1);
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+
+        .icon {
+            font-size: 24px;
+            color: #FF6B6B;
+        }
+        
+        .heart-icon {
+            font-size: 30px;
+            background: linear-gradient(45deg, #FF6B6B, #FFD166, #7B2CBF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
+        }
+
+        /* 5. Spacing and alignment */
+        .photo-gallery {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 90%;
+            max-width: 800px;
+            margin-top: 100px;
+        }
+        
+        /* 2. Photo frame effect */
+        .photo-box {
+            margin: 20px 0;
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            padding: 15px;
+            box-shadow: 0 0 20px rgba(255, 182, 193, 0.7),
+                        0 0 40px rgba(255, 105, 180, 0.5);
+            width: 100%;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            position: relative;
+            border: 5px solid rgba(255, 255, 255, 0.5);
+        }
+        
+        /* 9. Hover animations on photos */
+        .photo-box:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(255, 182, 193, 0.9), 
+                        0 0 60px rgba(255, 105, 180, 0.7);
+        }
+
+        .photo-box img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        /* 6. Add captions under the photos */
+        .photo-box .caption {
+            font-size: 1.5rem;
+            color: #333;
+            margin: 10px 0;
+            font-weight: bold;
+            font-family: 'Dancing Script', cursive;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* 8. Section dividers */
+        .divider {
+            width: 80%;
+            height: 2px;
+            background-color: #FF6B6B;
+            margin: 40px auto;
+            border-radius: 2px;
+            position: relative;
+        }
+        .divider::before, .divider::after {
+            content: '❤️';
+            font-size: 20px;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        .divider::before { left: -10px; }
+        .divider::after { right: -10px; }
     </style>
 </head>
 <body>
 
-    <a href="main2.html" class="home-button">HOME</a>
+    <audio id="background-music" loop>
+        <source src="song.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
 
-    <div class="gallery-container">
-        <!-- Replace "pic1.jpg", "pic2.jpg", etc. with the actual file paths of your images. -->
-        <!-- For this to work, the images need to be in the same folder as this HTML file. -->
-        <img src="image_3.jpg" alt="A photo from my collection">
-        <img src="picE1.jpg" alt="A photo from my collection">
-        <img src="picE2.jpg" alt="A photo from my collection">
-        <img src="picE3.jpg" alt="A photo from my collection">
-        <img src="picE4.jpg" alt="A photo from my collection">
-        <img src="picE5.jpg" alt="A photo from my collection">
-        <img src="picE6.jpg" alt="A photo from my collection">
-        <img src="picE7.jpg" alt="A photo from my collection">
-        <img src="picE8.jpg" alt="A photo from my collection">
-        <img src="picE9.jpg" alt="A photo from my collection">
-        <img src="picE10.jpg" alt="A photo from my collection">
-        <img src="picE11.jpg" alt="A photo from my collection">
-        <img src="picE12.jpg" alt="A photo from my collection">
-        <img src="picE13.jpg" alt="A photo from my collection">
-        <img src="picE14.jpg" alt="A photo from my collection">
-      
-        <!-- You can copy and paste the img tag to add more photos -->
-        <!-- <img src="pic4.jpg" alt="Another photo"> -->
+    <div class="hearts-container"></div>
+    
+    <div class="button-container">
+        <div id="music-toggle-btn" class="play-btn-circle">
+            <span id="music-icon" class="icon">♪</span>
+        </div>
+        <a href="main2.html" class="home-button">HOME</a>
     </div>
 
+    <h1 class="page-title">My Photos</h1>
+
+    <div class="photo-gallery">
+        <div class="photo-box">
+            <img src="image_3.jpg" alt="A photo from my collection">
+            <p class="caption">With you, every moment is a treasured memory. 💖</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="photo-box">
+            <img src="picE1.jpg" alt="A photo from my collection">
+            <p class="caption">The first of a thousand smiles. 😊</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="photo-box">
+            <img src="picE2.jpg" alt="A photo from my collection">
+            <p class="caption">Just us, making memories. 🫶</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="photo-box">
+            <img src="picE3.jpg" alt="A photo from my collection">
+            <p class="caption">In a world of my own with you. ✨</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="photo-box">
+            <img src="picE4.jpg" alt="A photo from my collection">
+            <p class="caption">My favorite kind of adventure. 🏞️</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="photo-box">
+            <img src="picE5.jpg" alt="A photo from my collection">
+            <p class="caption">My heart is full when you're near. 🥰</p>
+        </div>
+        
+        <div class="divider"></div>
+
+        <div class="photo-box">
+            <img src="picE6.jpg" alt="A photo from my collection">
+            <p class="caption">The happiest moments with you. 😄</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="photo-box">
+            <img src="picE7.jpg" alt="A photo from my collection">
+            <p class="caption">Our story is my favorite. 📖</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="photo-box">
+            <img src="picE8.jpg" alt="A photo from my collection">
+            <p class="caption">Finding love in the little things. ❤️</p>
+        </div>
+        
+        <div class="divider"></div>
+
+        <div class="photo-box">
+            <img src="picE9.jpg" alt="A photo from my collection">
+            <p class="caption">Forever and always, you and me. 🥂</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="photo-box">
+            <img src="picE10.jpg" alt="A photo from my collection">
+            <p class="caption">You are my whole world. 💫</p>
+        </div>
+        
+        <div class="divider"></div>
+
+        <div class="photo-box">
+            <img src="picE11.jpg" alt="A photo from my collection">
+            <p class="caption">Love is in the air. 🎈</p>
+        </div>
+        
+        <div class="divider"></div>
+
+        <div class="photo-box">
+            <img src="picE12.jpg" alt="A photo from my collection">
+            <p class="caption">Every day with you is a gift. 🎁</p>
+        </div>
+        
+        <div class="divider"></div>
+
+        <div class="photo-box">
+            <img src="picE13.jpg" alt="A photo from my collection">
+            <p class="caption">Creating our own fairytale. 👑</p>
+        </div>
+        
+        <div class="divider"></div>
+
+        <div class="photo-box">
+            <img src="picE14.jpg" alt="A photo from my collection">
+            <p class="caption">A love song in every photo. 🎶</p>
+        </div>
+        
+    </div>
+
+    <script>
+        // JavaScript for subtle animation (floating hearts)
+        function createHeart() {
+            const heartsContainer = document.querySelector('.hearts-container');
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.textContent = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 5 + 5 + 's';
+            heartsContainer.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 10000);
+        }
+
+        setInterval(createHeart, 300);
+
+        // Music control functionality
+        const music = document.getElementById('background-music');
+        const toggleBtn = document.getElementById('music-toggle-btn');
+        const icon = document.getElementById('music-icon');
+
+        let isPlaying = false;
+
+        toggleBtn.addEventListener('click', () => {
+            if (isPlaying) {
+                music.pause();
+                icon.textContent = '♪';
+                icon.classList.remove('heart-icon');
+                toggleBtn.classList.add('play-btn-circle');
+            } else {
+                music.play();
+                icon.textContent = '❤️';
+                icon.classList.add('heart-icon');
+                toggleBtn.classList.remove('play-btn-circle');
+            }
+            isPlaying = !isPlaying;
+        });
+    </script>
 </body>
 </html>
-
