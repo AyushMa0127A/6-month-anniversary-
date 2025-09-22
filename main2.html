@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Photo Gallery</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
     <style>
         /* A universal box-sizing rule for consistent layout behavior */
         *, *::before, *::after {
@@ -11,12 +12,8 @@
         }
 
         body {
-            /* Set a fallback color in case the background image doesn't load */
-            background-color: #333;
-            background-image: url('back.jpg');
-            background-size: cover;
-            background-position: center;
-            /* This is the key change to fix the background */
+            /* Using a subtle peach to light pink gradient background */
+            background: linear-gradient(135deg, #FFC0CB, #FADADD); /* Soft Pink and Peach colors */
             background-attachment: fixed;
             font-family: 'Arial', sans-serif;
             margin: 0;
@@ -24,10 +21,52 @@
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
-            color: black;
+            color: #333;
             padding: 20px 0 50px;
         }
 
+        /* Music Toggle Button Styling */
+        #music-toggle-btn {
+            position: fixed;
+            top: 20px; /* Shift to the top */
+            left: 20px; /* Shift to the left */
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        .play-btn-style {
+            background-color: rgba(255, 255, 255, 0.7); /* Circle background */
+            border: 2px solid #FF6B6B; /* Circle border */
+            border-radius: 50%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
+        }
+        
+        .play-btn-style:hover {
+            transform: scale(1.1);
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+
+        .icon {
+            font-size: 24px;
+            color: #FF6B6B;
+            transition: color 0.2s ease-in-out;
+        }
+
+        .heart-icon {
+            font-size: 30px; /* Make the heart a bit bigger */
+            background: linear-gradient(45deg, #FF6B6B, #FFD166, #7B2CBF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 10px rgba(255, 105, 180, 0.5); /* Add a subtle glow */
+            transition: transform 0.2s ease-in-out;
+        }
+        
         .photo-gallery {
             display: flex;
             flex-direction: column;
@@ -40,32 +79,62 @@
         .photo-box {
             margin: 20px 0;
             text-align: center;
-            border-radius: 10px;
+            border-radius: 20px; /* Softer rounded corners */
             overflow: hidden;
-            background-color: rgba(139, 69, 19, 0.9);
+            background-color: rgba(255, 255, 255, 0.2); /* Semi-transparent white card */
             padding: 10px;
-            box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 20px rgba(255, 182, 193, 0.7), /* Soft rose-gold glow */
+                        0 0 40px rgba(255, 105, 180, 0.5); /* Deeper pink glow */
             width: 100%;
             transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            position: relative; /* Needed for the pseudo-element border */
         }
         
+        .photo-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 20px;
+            padding: 5px; /* Adjust thickness of the border */
+            background: linear-gradient(
+                45deg,
+                #FF6B6B, /* Rose */
+                #FFD166, /* Pastel Yellow */
+                #06D6A0, /* Pastel Green */
+                #118AB2, /* Pastel Blue */
+                #7B2CBF /* Purple */
+            );
+            -webkit-mask: 
+                linear-gradient(#fff 0 0) content-box, 
+                linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            z-index: -1;
+        }
+
         /* Add a hover effect for a more interactive feel */
         .photo-box:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 30px rgba(255, 182, 193, 0.9), 
+                        0 0 60px rgba(255, 105, 180, 0.7);
         }
 
         .photo-box img {
             width: 100%;
             height: auto;
-            border-radius: 5px;
+            border-radius: 15px; /* Adjusted to fit the new card radius */
         }
 
         .photo-box p {
             font-size: 1.5rem;
-            color: black;
+            color: #333;
             margin: 10px 0;
             font-weight: bold;
+            font-family: 'Dancing Script', cursive; /* Applied the new font */
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2); /* Subtle text shadow */
         }
 
         .photo-link {
@@ -77,56 +146,99 @@
 </head>
 <body>
 
+    <audio id="background-music" loop>
+        <source src="song.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <div id="music-toggle-btn">
+        <span id="music-icon" class="icon">♪</span>
+    </div>
+
     <div class="photo-gallery">
         <a href="1stday.html" class="photo-link">
             <div class="photo-box">
-                <p>1st day</p>
+                <p>✨Our first date✨</p>
                 <img src="image_0.jpg" alt="1st day pics">
             </div>
         </a>
         <a href="1stmonth.html" class="photo-link">
             <div class="photo-box">
-                <p>1st month</p>
+                <p>1st Month ✨</p>
                 <img src="image_1.jpg" alt="Photo's from the 1st month">
             </div>
         </a>
         <a href="2ndmonth.html" class="photo-link">
             <div class="photo-box">
-                <p>2nd month</p>
+                <p>2nd Month 🌹</p>
                 <img src="image_2.jpg" alt="Photo's from the 2nd month">
             </div>
         </a>
         <a href="3rdmonth.html" class="photo-link">
             <div class="photo-box">
-                <p>3rd month</p>
+                <p>3rd Month 💫</p>
                 <img src="image_3.jpg" alt="Photo's from the 3rd month">
             </div>
         </a>
         <a href="4thmonth.html" class="photo-link">
             <div class="photo-box">
-                <p>4th month</p>
+                <p>4th Month 🕊️</p>
                 <img src="image_4.jpg" alt="Photo's from the 4th month">
             </div>
         </a>
         <a href="5thmonth.html" class="photo-link">
             <div class="photo-box">
-                <p>5th month</p>
-                <img src="picF11.jpg" alt="Photo's from the 5th month">
+                <p>5th Month 🎶</p>
+                <img src="picF7.jpg" alt="Photo's from the 5th month">
             </div>
         </a>
         <a href="6thmonth.html" class="photo-link">
             <div class="photo-box">
-                <p>6th month</p>
+                <p>6th month🔮</p>
                 <img src="IMG_20250921_204925.jpg" alt="Photo's from the 6th month">
             </div>
         </a>
         <a href="Puja.html" class="photo-link">
             <div class="photo-box">
-                <p>Puja's 2k25</p>
+                <p>✨ Puja's 2k25 ✨</p>
                 <img src="puja1.jpg" alt="Photo's of Puja">
             </div>
         </a>
     </div>
+
+    <script>
+        const music = document.getElementById('background-music');
+        const toggleBtn = document.getElementById('music-toggle-btn');
+        const icon = document.getElementById('music-icon');
+
+        let isPlaying = false;
+
+        toggleBtn.addEventListener('click', () => {
+            if (isPlaying) {
+                music.pause();
+                icon.textContent = '♪';
+                icon.classList.remove('heart-icon');
+                toggleBtn.classList.add('play-btn-style'); /* Add the circle back */
+            } else {
+                music.play();
+                icon.textContent = '❤️';
+                icon.classList.add('heart-icon');
+                toggleBtn.classList.remove('play-btn-style'); /* Remove the circle */
+            }
+            isPlaying = !isPlaying;
+        });
+
+        window.addEventListener('load', () => {
+            if (!music.paused) {
+                isPlaying = true;
+                icon.textContent = '❤️';
+                icon.classList.add('heart-icon');
+                toggleBtn.classList.remove('play-btn-style');
+            } else {
+                toggleBtn.classList.add('play-btn-style');
+            }
+        });
+    </script>
 
 </body>
 </html>
