@@ -77,7 +77,7 @@
             border-radius: 50px;
             font-weight: bold;
             transition: all 0.3s ease;
-            background: linear-gradient(45deg, #FF6B6B, #FADADD); 
+            background: linear-gradient(45deg, #FF6B6B, #FADADD);
             color: #fff;
             font-family: 'Dancing Script', cursive;
             font-size: 1.2rem;
@@ -141,29 +141,45 @@
         /* 2. Photo frame effect */
         .photo-box {
             margin: 20px 0;
-            text-align: center;
             background-color: rgba(255, 255, 255, 0.3);
             border-radius: 20px;
-            padding: 15px;
-            box-shadow: 0 0 20px rgba(255, 182, 193, 0.7),
-                        0 0 40px rgba(255, 105, 180, 0.5);
+            padding: 2px;
             width: 100%;
-            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            transition: transform 0.3s ease-in-out;
             position: relative;
-            border: 5px solid rgba(255, 255, 255, 0.5);
+            border: none;
         }
         
         /* 9. Hover animations on photos */
         .photo-box:hover {
             transform: scale(1.05);
-            box-shadow: 0 0 30px rgba(255, 182, 193, 0.9), 
-                        0 0 60px rgba(255, 105, 180, 0.7);
+            box-shadow: none;
         }
+
+        /* --- UPDATED CODE FOR RED/PINK GLOW --- */
+        .photo-box::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            z-index: -1;
+            /* A prominent, mixed-color box-shadow */
+            box-shadow: 0 0 20px rgba(255, 60, 100, 1),
+                        0 0 40px rgba(255, 60, 100, 1),
+                        0 0 60px rgba(255, 60, 100, 1);
+        }
+        /* --- END OF UPDATED CODE --- */
 
         .photo-box img {
             width: 100%;
             height: auto;
             border-radius: 10px;
+            position: relative;
+            z-index: 1;
         }
 
         /* 6. Add captions under the photos */
@@ -217,35 +233,30 @@
     <div class="photo-gallery">
         <div class="photo-box">
             <img src="image_1.jpg" alt="A photo from my collection">
-            <p class="caption">Every day with you is my favorite day. ✨</p>
         </div>
 
         <div class="divider"></div>
 
         <div class="photo-box">
             <img src="picB1.jpg" alt="A photo from my collection">
-            <p class="caption">The start of our forever. ❤️</p>
         </div>
 
         <div class="divider"></div>
 
         <div class="photo-box">
             <img src="picB2.jpg" alt="A photo from my collection">
-            <p class="caption">Lost in this moment with you. 💫</p>
         </div>
 
         <div class="divider"></div>
 
         <div class="photo-box">
             <img src="picB3.jpg" alt="A photo from my collection">
-            <p class="caption">All the stars align when we're together. 💖</p>
         </div>
 
         <div class="divider"></div>
 
         <div class="photo-box">
             <img src="picB4.jpg" alt="A photo from my collection">
-            <p class="caption">Holding on to you and this memory. 🥰</p>
         </div>
         
     </div>
