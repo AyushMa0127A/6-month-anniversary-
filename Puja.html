@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Durga Puja Photo Gallery</title>
-    <link href="https://fonts.googleapis.com/css2?family=Tiro+Bangla:wght@400;700&family=Noto+Serif:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tiro+Bangla:wght@400;700&family=Noto+Serif:wght=400;700&display=swap" rel="stylesheet">
     <style>
-        /* Base Styles - The Midnight Sky */
+        /* Base Styles - Shubho Sharodiya Dawn */
         body {
-            background: radial-gradient(circle at center, #2e0808 0%, #0a0a0a 100%);
+            /* A soft, gradient background transitioning from a golden sunrise to a clear sky */
+            background: linear-gradient(135deg, #FFF8DC, #FFFAF0, #F0F8FF);
             background-attachment: fixed;
-            color: #FFD700;
+            color: #4A0000; /* Deep maroon for a traditional touch */
             font-family: 'Noto Serif', serif;
             margin: 0;
             padding: 0;
@@ -25,8 +26,8 @@
             font-family: 'Tiro Bangla', serif;
             font-size: 3.5rem;
             text-align: center;
-            color: #FFD700;
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.7), 0 0 15px rgba(255, 215, 0, 0.5);
+            color: #8B0000; /* Darker red for emphasis */
+            text-shadow: 2px 2px 5px rgba(255, 215, 0, 0.5);
             margin-top: 50px;
             margin-bottom: 30px;
         }
@@ -37,14 +38,17 @@
             top: 20px;
             right: 20px;
             padding: 10px 15px;
-            background-color: rgba(0, 0, 0, 0.7);
-            color: #b8860b;
+            /* A clean, classic look */
+            background-color: rgba(255, 255, 255, 0.8);
+            color: #8B0000;
             text-decoration: none;
-            border: 2px solid #FFD700;
+            /* Changed border color to #8B0000 for a red line */
+            border: 2px solid #8B0000;
             border-radius: 5px;
             font-weight: bold;
             z-index: 1000;
-            box-shadow: 0 0 20px #FFD700, inset 0 0 10px #FFD700;
+            /* Changed box-shadow color to match the border */
+            box-shadow: 0 0 10px rgba(139, 0, 0, 0.5);
             transition: transform 0.3s ease;
         }
 
@@ -64,10 +68,10 @@
         #music-toggle-btn.music-note-state {
             width: 55px;
             height: 55px;
-            background-color: rgba(255, 255, 255, 0.2);
+            background-color: rgba(255, 255, 255, 0.5);
             border-radius: 50%;
-            border: 2px solid #FFD700;
-            box-shadow: 0 0 10px #FFD700, inset 0 0 5px #FFD700;
+            border: 2px solid #8B0000;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
         }
 
         #music-toggle-btn {
@@ -84,7 +88,7 @@
 
         .icon {
             font-size: 24px;
-            color: #FFD700;
+            color: #8B0000;
             transition: font-size 0.3s ease, text-shadow 0.3s ease;
         }
 
@@ -108,7 +112,7 @@
             flex-direction: column;
             gap: 40px;
             scrollbar-width: thin;
-            scrollbar-color: #555 #222;
+            scrollbar-color: #A9A9A9 #EAEAEA;
         }
 
         .gallery-container::-webkit-scrollbar {
@@ -116,29 +120,30 @@
         }
 
         .gallery-container::-webkit-scrollbar-track {
-            background: #222;
+            background: #EAEAEA;
             border-radius: 10px;
         }
 
         .gallery-container::-webkit-scrollbar-thumb {
-            background-color: #555;
+            background-color: #A9A9A9;
             border-radius: 10px;
-            border: 2px solid #222;
+            border: 2px solid #EAEAEA;
         }
 
         .photo-box {
             position: relative;
-            background-color: rgba(255, 255, 255, 0.05);
+            /* Light, subtle background and border */
+            background-color: rgba(255, 255, 255, 0.6);
             border: 2px solid #FFD700;
             border-radius: 8px;
             padding: 10px;
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .photo-box:hover {
-            transform: scale(1.03);
-            box-shadow: 0 0 30px #FFD700, 0 0 50px #FFD700;
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
         }
 
         .photo-box img {
@@ -147,20 +152,21 @@
             border-radius: 5px;
         }
 
+        /* A delicate, simple divider */
         .divider {
-            height: 2px;
-            background: #FFD700;
+            height: 1px;
+            background-image: linear-gradient(90deg, transparent, #FFD700, transparent);
             width: 80%;
             margin: 20px auto;
             position: relative;
-            box-shadow: 0 0 10px #FFD700;
+            border-bottom: 1px dashed #FFD700;
         }
 
         .divider::before, .divider::after {
             content: '';
             position: absolute;
-            width: 10px;
-            height: 10px;
+            width: 8px;
+            height: 8px;
             background-color: #FFD700;
             border-radius: 50%;
             top: 50%;
@@ -169,11 +175,11 @@
         }
 
         .divider::before {
-            left: -15px;
+            left: -12px;
         }
 
         .divider::after {
-            right: -15px;
+            right: -12px;
         }
     </style>
 </head>
