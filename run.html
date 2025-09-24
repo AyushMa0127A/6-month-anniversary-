@@ -4,19 +4,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>6 months anniversary</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
-            background-image: url('background.jpg');
-            background-size: cover;
-            background-position: center;
+            background: linear-gradient(135deg, #E6A2F2, #F0A3E0, #E6A2F2);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            color: black;
+            color: #333;
             padding-bottom: 50px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 1px, transparent 1px),
+                        radial-gradient(circle, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px, 100px 100px;
+            animation: moveStars 100s linear infinite;
+        }
+
+        @keyframes moveStars {
+            from { background-position: 0 0; }
+            to { background-position: 100% 100%; }
         }
 
         @keyframes fadeOut {
@@ -34,35 +54,35 @@
             border-radius: 15px;
             text-align: center;
             transition: opacity 2s ease-in-out;
-            /* Allow text to wrap on smaller screens */
             word-wrap: break-word; 
+            z-index: 10;
         }
 
         .aura-text {
-            color: #FFD700;
+            font-family: 'Dancing Script', cursive;
+            color: #8A2BE2;
             font-size: 14vw;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            
+            font-weight: 700;
             text-shadow:
-                0 0 10px #FF0000, /* Bright Red */
-                0 0 20px #DC143C, /* Crimson */
-                0 0 30px #B22222, /* FireBrick */
-                0 0 40px #8B0000, /* Dark Red */
-                0 0 50px #A52A2A; /* Brown/Red */
+                0 0 5px #ff00ff,
+                0 0 15px #ff00ff,
+                0 0 30px #ff00ff;
+            animation: pulse 4s infinite alternate;
+        }
+        
+        @keyframes pulse {
+            from { text-shadow: 0 0 5px #ff00ff, 0 0 15px #ff00ff, 0 0 30px #ff00ff; }
+            to { text-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff, 0 0 40px #ff00ff; }
         }
 
-        /* --- Media Query for Mobile Responsiveness --- */
         @media (max-width: 600px) {
             .aura-text {
-                font-size: 10vw; /* Reduced font size for mobile screens */
-                padding: 0 10px; /* Added some horizontal padding */
-                /* Adjust text shadow for smaller size */
+                font-size: 10vw;
+                padding: 0 10px;
                 text-shadow:
-                    0 0 8px #FF0000,
-                    0 0 15px #DC143C,
-                    0 0 20px #B22222;
+                    0 0 5px #ff00ff,
+                    0 0 10px #ff00ff,
+                    0 0 20px #ff00ff;
             }
         }
 
@@ -73,9 +93,43 @@
         .fade-in {
             animation: fadeIn 2s forwards;
         }
+        
+        .button {
+            position: fixed;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 25px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s ease-in-out;
+            z-index: 1000;
+            text-align: center;
+        }
+        
+        /* Updated Skip Button Styles */
+        .skip-btn {
+            top: 20px;
+            right: 20px;
+            background: #6A0DAD; /* Deep purple background */
+            color: #FFD700; /* Reddish-yellow text color */
+            border: none;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2), 0 0 15px #FF6347, 0 0 25px #FFA500; /* Reddish-yellow glow */
+            font-family: 'Dancing Script', cursive; /* Aesthetic font for the text */
+            font-size: 20px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .skip-btn:hover {
+            transform: translateY(-2px);
+            background: #8A2BE2; /* Slightly brighter purple on hover */
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3), 0 0 20px #FF6347, 0 0 35px #FFA500;
+        }
     </style>
 </head>
 <body>
+
+    <a href="main2.html" class="skip-btn button">Skip</a>
 
     <div id="textContainer" class="text-container">
         <h1 id="myText" class="aura-text">Happy 6 months anniversary my love🎂🎉💐</h1>
@@ -84,7 +138,7 @@
     <script>
         const textContainer = document.getElementById('textContainer');
         const myText = document.getElementById('myText');
-
+        
         setTimeout(() => {
             textContainer.classList.add('fade-out');
         }, 2000);
@@ -93,7 +147,7 @@
             if (event.animationName === 'fadeOut') {
                 if (myText.textContent.includes('Happy')) {
                     setTimeout(() => {
-                        myText.textContent = "I love you so much darling😘😘";
+                        myText.textContent = "I love you so much darling";
                         textContainer.classList.remove('fade-out');
                         textContainer.classList.add('fade-in');
                     }, 500); 
@@ -109,6 +163,5 @@
             }
         });
     </script>
-
 </body>
 </html>
