@@ -6,7 +6,6 @@
     <title>My Photo Gallery</title>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* 1. Background upgrade */
         body {
             background: linear-gradient(135deg, #FFC0CB, #FADADD);
             background-attachment: fixed;
@@ -22,7 +21,7 @@
             position: relative;
         }
 
-        /* 3. Subtle animation (Floating hearts) */
+        /* Floating hearts */
         .hearts-container {
             position: fixed;
             top: 0;
@@ -33,7 +32,6 @@
             z-index: -1;
             overflow: hidden;
         }
-
         .heart {
             position: absolute;
             font-size: 20px;
@@ -46,7 +44,7 @@
             100% { transform: translateY(-10vh) scale(1); opacity: 0; }
         }
 
-        /* 4. Title/Header style */
+        /* Title */
         .page-title {
             font-family: 'Dancing Script', cursive;
             font-size: 3rem;
@@ -57,7 +55,7 @@
             padding-top: 50px;
         }
 
-        /* Button container for positioning */
+        /* Buttons */
         .button-container {
             position: fixed;
             top: 20px;
@@ -68,8 +66,6 @@
             align-items: center;
             z-index: 1000;
         }
-
-        /* Home Button Styles */
         .home-button {
             padding: 10px 25px;
             text-decoration: none;
@@ -84,14 +80,11 @@
             box-shadow: 0 0 15px rgba(255, 105, 180, 0.8),
                         0 5px 15px rgba(0, 0, 0, 0.2);
         }
-        
         .home-button:hover {
             transform: scale(1.1);
             box-shadow: 0 0 25px rgba(255, 105, 180, 1),
                         0 8px 20px rgba(0, 0, 0, 0.3);
         }
-
-        /* Music Toggle Button Styles */
         #music-toggle-btn {
             width: 50px;
             height: 50px;
@@ -101,7 +94,6 @@
             cursor: pointer;
             transition: transform 0.2s ease-in-out;
         }
-
         .play-btn-circle {
             background-color: rgba(255, 255, 255, 0.7);
             border: 2px solid #FF6B6B;
@@ -109,17 +101,14 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
         }
-        
         #music-toggle-btn:hover .play-btn-circle {
             transform: scale(1.1);
             background-color: rgba(255, 255, 255, 0.9);
         }
-
         .icon {
             font-size: 24px;
             color: #FF6B6B;
         }
-        
         .heart-icon {
             font-size: 30px;
             background: linear-gradient(45deg, #FF6B6B, #FFD166, #7B2CBF);
@@ -128,7 +117,7 @@
             text-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
         }
 
-        /* 5. Spacing and alignment */
+        /* Gallery */
         .photo-gallery {
             display: flex;
             flex-direction: column;
@@ -137,57 +126,37 @@
             max-width: 800px;
             margin-top: 100px;
         }
-        
-        /* 2. Photo frame effect */
         .photo-box {
             margin: 20px 0;
             text-align: center;
             background-color: rgba(255, 255, 255, 0.3);
             border-radius: 20px;
-            padding: 2px; /* Adjusted padding to create a thin border for the glow */
+            padding: 2px;
             width: 100%;
             transition: transform 0.3s ease-in-out;
             position: relative;
             border: none;
-            box-shadow: none; /* Removed initial box-shadow */
+            cursor: crosshair;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(255, 60, 100, 0.7),
+                        0 0 40px rgba(255, 60, 100, 0.5),
+                        0 0 60px rgba(255, 60, 100, 0.3);
         }
-        
-        /* 9. Hover animations on photos */
         .photo-box:hover {
             transform: scale(1.05);
-            box-shadow: none;
+            box-shadow: 0 0 25px rgba(255, 60, 100, 1),
+                        0 0 50px rgba(255, 60, 100, 0.8),
+                        0 0 70px rgba(255, 60, 100, 0.6);
         }
-
         .photo-box img {
             width: 100%;
             height: auto;
             border-radius: 10px;
             position: relative;
-            z-index: 1; /* Ensures image is on top of the glow effect */
+            z-index: 1;
         }
 
-        /* This is the core of the glow effect. The ::after pseudo-element creates a layer that holds the glow. */
-        .photo-box::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 20px;
-            z-index: -1; /* Puts the glow behind the photo content */
-            box-shadow: 0 0 20px rgba(255, 60, 100, 1),
-                        0 0 40px rgba(255, 60, 100, 1),
-                        0 0 60px rgba(255, 60, 100, 1);
-        }
-
-        /* Remove the caption styles since the captions are being removed */
-        .photo-box .caption {
-            display: none;
-        }
-        
-        /* 8. Section dividers */
+        /* Divider */
         .divider {
             width: 80%;
             height: 2px;
@@ -205,10 +174,44 @@
         }
         .divider::before { left: -10px; }
         .divider::after { right: -10px; }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            padding-top: 60px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.9);
+        }
+        .modal-content {
+            margin: auto;
+            display: block;
+            max-width: 90%;
+            border-radius: 15px;
+            box-shadow: 0 0 25px rgba(255, 60, 100, 1),
+                        0 0 50px rgba(255, 60, 100, 0.8);
+        }
+        .close {
+            position: absolute;
+            top: 20px;
+            right: 35px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            text-shadow: 0 0 10px #ff3c64;
+        }
+        .close:hover {
+            color: #ff99b9;
+        }
     </style>
 </head>
 <body>
-
     <audio id="background-music" loop>
         <source src="song.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
@@ -226,20 +229,25 @@
     <h1 class="page-title">6th month✨</h1>
 
     <div class="photo-gallery">
-        <div class="photo-box">
+        <div class="photo-box" data-img-src="image_6.jpg">
             <img src="image_6.jpg" alt="A photo from my collection">
         </div>
 
         <div class="divider"></div>
 
-        <div class="photo-box">
+        <div class="photo-box" data-img-src="IMG_20250921_204925.jpg">
             <img src="IMG_20250921_204925.jpg" alt="A photo from my collection">
         </div>
-        
+    </div>
+
+    <!-- Modal -->
+    <div id="myModal" class="modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="modalImage">
     </div>
 
     <script>
-        // JavaScript for subtle animation (floating hearts)
+        // Floating hearts
         function createHeart() {
             const heartsContainer = document.querySelector('.hearts-container');
             const heart = document.createElement('div');
@@ -248,21 +256,15 @@
             heart.style.left = Math.random() * 100 + 'vw';
             heart.style.animationDuration = Math.random() * 5 + 5 + 's';
             heartsContainer.appendChild(heart);
-
-            setTimeout(() => {
-                heart.remove();
-            }, 10000);
+            setTimeout(() => { heart.remove(); }, 10000);
         }
-
         setInterval(createHeart, 300);
 
-        // Music control functionality
+        // Music toggle
         const music = document.getElementById('background-music');
         const toggleBtn = document.getElementById('music-toggle-btn');
         const icon = document.getElementById('music-icon');
-
         let isPlaying = false;
-
         toggleBtn.addEventListener('click', () => {
             if (isPlaying) {
                 music.pause();
@@ -277,6 +279,43 @@
             }
             isPlaying = !isPlaying;
         });
+
+        // Modal logic (dblclick & double-tap)
+        const modal = document.getElementById("myModal");
+        const modalImg = document.getElementById("modalImage");
+        const photoBoxes = document.querySelectorAll('.photo-box');
+        const span = document.getElementsByClassName("close")[0];
+
+        photoBoxes.forEach(box => {
+            // Desktop double click
+            box.addEventListener('dblclick', () => {
+                modal.style.display = "block";
+                modalImg.src = box.getAttribute('data-img-src');
+            });
+
+            // Mobile double tap
+            let lastTap = 0;
+            box.addEventListener('touchend', (e) => {
+                const currentTime = new Date().getTime();
+                const tapLength = currentTime - lastTap;
+                if (tapLength < 300 && tapLength > 0) {
+                    modal.style.display = "block";
+                    modalImg.src = box.getAttribute('data-img-src');
+                    e.preventDefault();
+                }
+                lastTap = currentTime;
+            });
+        });
+
+        // Close modal
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+        modal.onclick = function(event) {
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        }
     </script>
 </body>
 </html>
