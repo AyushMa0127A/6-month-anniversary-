@@ -148,6 +148,7 @@
             width: 100%;
             transition: transform 0.3s ease-in-out;
             border: 1px solid #FF69B4;
+            cursor: pointer;
         }
         
         /* 9. Hover animations on photos */
@@ -202,25 +203,25 @@
 
     <div class="photo-gallery">
         <div class="photo-box">
-            <img src="image_0.jpg" alt="A photo from our first date">
+            <img class="double-tap-img" src="image_0.jpg" alt="A photo from our first date">
         </div>
 
         <div class="divider"></div>
 
         <div class="photo-box">
-            <img src="picA2.jpg" alt="A photo from our first date">
+            <img class="double-tap-img" src="picA2.jpg" alt="A photo from our first date">
         </div>
 
         <div class="divider"></div>
 
         <div class="photo-box">
-            <img src="picA3.jpg" alt="A photo from our first date">
+            <img class="double-tap-img" src="picA3.jpg" alt="A photo from our first date">
         </div>
 
         <div class="divider"></div>
 
         <div class="photo-box">
-            <img src="picA4.jpg" alt="A photo from our first date">
+            <img class="double-tap-img" src="picA4.jpg" alt="A photo from our first date">
         </div>
     </div>
 
@@ -256,13 +257,45 @@
                 icon.classList.remove('star-icon');
                 toggleBtn.classList.add('play-btn-circle');
             } else {
-                music.play();
+                music.play().catch(error => {
+                    console.error("Music play failed:", error);
+                });
                 icon.textContent = '⭐';
                 icon.classList.add('star-icon');
                 toggleBtn.classList.remove('play-btn-circle');
             }
             isPlaying = !isPlaying;
         });
+
+        // 🌟 Double-Tap/Double-Click Feature with Fix 🌟
+        const images = document.querySelectorAll('.double-tap-img');
+
+        images.forEach(img => {
+            // Desktop double-click
+            img.addEventListener('dblclick', function(event) {
+                event.preventDefault(); 
+                openImageInNewViewer(this.src);
+            });
+
+            // Mobile double-tap
+            let lastTap = 0;
+            img.addEventListener('touchend', function(event) {
+                const currentTime = new Date().getTime();
+                const tapLength = currentTime - lastTap;
+                
+                if (tapLength < 300 && tapLength > 0) {
+                    event.preventDefault();
+                    openImageInNewViewer(this.src);
+                }
+                lastTap = currentTime;
+            });
+        });
+
+        function openImageInNewViewer(imageUrl) {
+            // New function: Redirects to viewer.html and passes the image URL
+            const viewerUrl = `viewer.html?img=${encodeURIComponent(imageUrl)}`;
+            window.open(viewerUrl, '_blank');
+        }
     </script>
 </body>
 </html>
