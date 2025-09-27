@@ -145,21 +145,20 @@
             border-radius: 20px;
             padding: 2px;
             width: 100%;
-            /* Added fixed height to make object-fit work */
             height: 300px; 
             transition: transform 0.3s ease-in-out;
             position: relative;
             border: none;
-            cursor: crosshair; /* Hint for double-click */
+            cursor: crosshair;
         }
         
-        /* 9. Hover animations on photos */
+        /* Hover animations on photos */
         .photo-box:hover {
             transform: scale(1.05);
             box-shadow: none;
         }
 
-        /* --- UPDATED CODE FOR RED/PINK GLOW --- */
+        /* Glow around gallery photos */
         .photo-box::after {
             content: '';
             position: absolute;
@@ -167,40 +166,24 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(255, 255, 255, 0.3);
             border-radius: 20px;
             z-index: -1;
-            /* A prominent, mixed-color box-shadow */
             box-shadow: 0 0 20px rgba(255, 60, 100, 1),
-                        0 0 40px rgba(255, 60, 100, 1),
-                        0 0 60px rgba(255, 60, 100, 1);
+                        0 0 40px rgba(255, 60, 100, 0.8),
+                        0 0 60px rgba(255, 60, 100, 0.6);
         }
-        /* --- END OF UPDATED CODE --- */
 
         .photo-box img {
             width: 100%;
-            /* Changed height to 100% and added object-fit: cover */
             height: 100%; 
             border-radius: 10px;
             position: relative;
             z-index: 1;
-            /* ⭐️ KEY CHANGE: Makes the image fill the fixed height/width of its container */
             object-fit: cover; 
-            /* To avoid image drag on double click */
             user-select: none;
         }
 
-        /* 6. Add captions under the photos (No change, left in case you want to use it later) */
-        .photo-box .caption {
-            font-size: 1.5rem;
-            color: #333;
-            margin: 10px 0;
-            font-weight: bold;
-            font-family: 'Dancing Script', cursive;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
-        }
-        
-        /* 8. Section dividers */
+        /* Divider */
         .divider {
             width: 80%;
             height: 2px;
@@ -239,6 +222,11 @@
             width: 90%;
             max-width: 700px;
             animation: zoom 0.6s;
+            border-radius: 15px;
+            /* ✨ Added glowing shadow */
+            box-shadow: 0 0 25px rgba(255, 60, 100, 1),
+                        0 0 50px rgba(255, 60, 100, 0.9),
+                        0 0 80px rgba(255, 60, 100, 0.7);
         }
 
         @keyframes zoom {
@@ -311,15 +299,15 @@
         <div class="photo-box" data-img-src="picB4.jpg">
             <img src="picB4.jpg" alt="A photo from my collection">
         </div>
-        
     </div>
 
     <div id="myModal" class="modal">
         <span class="close">&times;</span>
         <img class="modal-content" id="modalImage">
     </div>
+
     <script>
-        // JavaScript for subtle animation (floating hearts)
+        // Floating hearts
         function createHeart() {
             const heartsContainer = document.querySelector('.hearts-container');
             if (heartsContainer.children.length < 50) { 
@@ -338,11 +326,10 @@
         }
         setInterval(createHeart, 300);
 
-        // Music control functionality
+        // Music control
         const music = document.getElementById('background-music');
         const toggleBtn = document.getElementById('music-toggle-btn');
         const icon = document.getElementById('music-icon');
-
         let isPlaying = false;
 
         toggleBtn.addEventListener('click', () => {
@@ -363,27 +350,37 @@
             isPlaying = !isPlaying;
         });
 
-        // ⭐️ KEY JAVASCRIPT: Double-Click Modal Functionality
+        // Double click / double tap modal
         const modal = document.getElementById("myModal");
         const modalImg = document.getElementById("modalImage");
         const photoBoxes = document.querySelectorAll('.photo-box');
         const span = document.getElementsByClassName("close")[0];
 
         photoBoxes.forEach(box => {
-            // Event listener changed to 'dblclick'
+            // Desktop dblclick
             box.addEventListener('dblclick', () => {
                 modal.style.display = "block";
-                // Get image source from the data attribute
                 modalImg.src = box.getAttribute('data-img-src'); 
+            });
+
+            // Mobile double tap
+            let lastTap = 0;
+            box.addEventListener('touchend', (e) => {
+                const currentTime = new Date().getTime();
+                const tapLength = currentTime - lastTap;
+                if (tapLength < 300 && tapLength > 0) { 
+                    modal.style.display = "block";
+                    modalImg.src = box.getAttribute('data-img-src'); 
+                    e.preventDefault();
+                }
+                lastTap = currentTime;
             });
         });
 
-        // Close the modal when the user clicks on (x)
+        // Close modal
         span.onclick = function() {
             modal.style.display = "none";
         }
-
-        // Close the modal when the user clicks anywhere outside of the image
         modal.onclick = function(event) {
             if (event.target === modal) {
                 modal.style.display = "none";
