@@ -3,463 +3,319 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Durga Puja Photo Gallery</title>
-    <link href="https://fonts.googleapis.com/css2?family=Tiro+Bangla:wght@400;700&family=Noto+Serif:wght=400;700&display=swap" rel="stylesheet">
+    <title>My Photo Gallery</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* Base Styles - Shubho Sharodiya Dawn */
         body {
-            /* A soft, gradient background transitioning from a golden sunrise to a clear sky */
-            background: linear-gradient(135deg, #FFF8DC, #FFFAF0, #F0F8FF);
+            background: linear-gradient(135deg, #FFC0CB, #FADADD);
             background-attachment: fixed;
-            color: #4A0000; /* Deep maroon for a traditional touch */
-            font-family: 'Noto Serif', serif;
+            font-family: 'Arial', sans-serif;
             margin: 0;
-            padding: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
+            color: #333;
+            padding: 20px 0 50px;
+            overflow-x: hidden;
+            position: relative;
         }
 
-        /* The Main Pandal Title */
-        .page-title {
-            font-family: 'Tiro Bangla', serif;
-            font-size: 3.5rem;
-            text-align: center;
-            color: #8B0000; /* Darker red for emphasis */
-            text-shadow: 2px 2px 5px rgba(255, 215, 0, 0.5);
-            margin-top: 50px;
-            margin-bottom: 30px;
-        }
-
-        /* Home Button - Top Right */
-        .home-button {
+        /* Floating hearts */
+        .hearts-container {
             position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 10px 15px;
-            /* A clean, classic look */
-            background-color: rgba(255, 255, 255, 0.8);
-            color: #8B0000;
-            text-decoration: none;
-            /* Changed border color to #8B0000 for a red line */
-            border: 2px solid #8B0000;
-            border-radius: 5px;
-            font-weight: bold;
-            z-index: 1000;
-            /* Changed box-shadow color to match the border */
-            box-shadow: 0 0 10px rgba(139, 0, 0, 0.5);
-            transition: transform 0.3s ease;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+        .heart {
+            position: absolute;
+            font-size: 20px;
+            color: rgba(255, 105, 180, 0.5);
+            animation: float 10s ease-in-out infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            50% { opacity: 0.5; }
+            100% { transform: translateY(-10vh) scale(1); opacity: 0; }
         }
 
-        .home-button:hover {
-            transform: scale(1.1);
+        /* Title */
+        .page-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3rem;
+            color: #FF69B4;
+            text-shadow: 0 0 10px rgba(255, 105, 180, 0.7);
+            margin-bottom: 20px;
+            text-align: center;
+            padding-top: 50px;
         }
 
-        /* Music Toggle Button Container */
-        .music-toggle-container {
+        /* Buttons */
+        .button-container {
             position: fixed;
             top: 20px;
             left: 20px;
+            right: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             z-index: 1000;
         }
-
-        /* Style for the music note container (with circle) */
-        #music-toggle-btn.music-note-state {
-            width: 55px;
-            height: 55px;
-            background-color: rgba(255, 255, 255, 0.5);
-            border-radius: 50%;
-            border: 2px solid #8B0000;
-            box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        .home-button {
+            padding: 10px 25px;
+            text-decoration: none;
+            border: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            background: linear-gradient(45deg, #FF6B6B, #FADADD); 
+            color: #fff;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.2rem;
+            box-shadow: 0 0 15px rgba(255, 105, 180, 0.8),
+                        0 5px 15px rgba(0, 0, 0, 0.2);
         }
-
+        .home-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 25px rgba(255, 105, 180, 1),
+                        0 8px 20px rgba(0, 0, 0, 0.3);
+        }
         #music-toggle-btn {
+            width: 50px;
+            height: 50px;
             display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            transition: transform 0.3s ease, all 0.5s ease;
+            transition: transform 0.2s ease-in-out;
         }
-
-        #music-toggle-btn:hover {
+        .play-btn-circle {
+            background-color: rgba(255, 255, 255, 0.7);
+            border: 2px solid #FF6B6B;
+            border-radius: 50%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
+        }
+        #music-toggle-btn:hover .play-btn-circle {
             transform: scale(1.1);
+            background-color: rgba(255, 255, 255, 0.9);
         }
-
         .icon {
             font-size: 24px;
-            color: #8B0000;
-            transition: font-size 0.3s ease, text-shadow 0.3s ease;
+            color: #FF6B6B;
         }
-
-        .pradip-icon {
-            font-size: 35px;
-            background: linear-gradient(45deg, #FFD700, #FFC0CB, #FF8C00);
+        .heart-icon {
+            font-size: 30px;
+            background: linear-gradient(45deg, #FF6B6B, #FFD166, #7B2CBF);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+            text-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
         }
 
-        .gallery-container {
-            width: 100%;
-            max-width: 800px;
-            padding: 20px;
-            box-sizing: border-box;
-            overflow-y: auto;
-            overflow-x: hidden;
-            height: 90vh;
+        /* Gallery */
+        .photo-gallery {
             display: flex;
             flex-direction: column;
-            gap: 40px;
-            scrollbar-width: thin;
-            scrollbar-color: #A9A9A9 #EAEAEA;
+            align-items: center;
+            width: 90%;
+            max-width: 800px;
+            margin-top: 100px;
         }
-
-        .gallery-container::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        .gallery-container::-webkit-scrollbar-track {
-            background: #EAEAEA;
-            border-radius: 10px;
-        }
-
-        .gallery-container::-webkit-scrollbar-thumb {
-            background-color: #A9A9A9;
-            border-radius: 10px;
-            border: 2px solid #EAEAEA;
-        }
-
         .photo-box {
+            margin: 20px 0;
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            padding: 2px;
+            width: 100%;
+            transition: transform 0.3s ease-in-out;
             position: relative;
-            /* Light, subtle background and border */
-            background-color: rgba(255, 255, 255, 0.6);
-            border: 2px solid #FFD700;
-            border-radius: 8px;
-            padding: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: none;
+            cursor: crosshair;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(255, 60, 100, 0.7),
+                        0 0 40px rgba(255, 60, 100, 0.5),
+                        0 0 60px rgba(255, 60, 100, 0.3);
         }
-
         .photo-box:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(255, 60, 100, 1),
+                        0 0 50px rgba(255, 60, 100, 0.8),
+                        0 0 70px rgba(255, 60, 100, 0.6);
         }
-
         .photo-box img {
             width: 100%;
             height: auto;
-            border-radius: 5px;
-        }
-
-        /* A delicate, simple divider */
-        .divider {
-            height: 1px;
-            background-image: linear-gradient(90deg, transparent, #FFD700, transparent);
-            width: 80%;
-            margin: 20px auto;
+            border-radius: 10px;
             position: relative;
-            border-bottom: 1px dashed #FFD700;
+            z-index: 1;
         }
 
+        /* Divider */
+        .divider {
+            width: 80%;
+            height: 2px;
+            background-color: #FF6B6B;
+            margin: 40px auto;
+            border-radius: 2px;
+            position: relative;
+        }
         .divider::before, .divider::after {
-            content: '';
+            content: '❤️';
+            font-size: 20px;
             position: absolute;
-            width: 8px;
-            height: 8px;
-            background-color: #FFD700;
-            border-radius: 50%;
             top: 50%;
             transform: translateY(-50%);
-            box-shadow: 0 0 5px #FFD700;
         }
+        .divider::before { left: -10px; }
+        .divider::after { right: -10px; }
 
-        .divider::before {
-            left: -12px;
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            padding-top: 60px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.9);
         }
-
-        .divider::after {
-            right: -12px;
+        .modal-content {
+            margin: auto;
+            display: block;
+            max-width: 90%;
+            border-radius: 15px;
+            box-shadow: 0 0 25px rgba(255, 60, 100, 1),
+                        0 0 50px rgba(255, 60, 100, 0.8);
+        }
+        .close {
+            position: absolute;
+            top: 20px;
+            right: 35px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            text-shadow: 0 0 10px #ff3c64;
+        }
+        .close:hover {
+            color: #ff99b9;
         }
     </style>
 </head>
 <body>
     <audio id="background-music" loop>
-        <source src="puja.mp3" type="audio/mpeg">
+        <source src="song.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
 
-    <div class="music-toggle-container">
-        <div id="music-toggle-btn" class="music-note-state">
+    <div class="hearts-container"></div>
+    
+    <div class="button-container">
+        <div id="music-toggle-btn" class="play-btn-circle">
             <span id="music-icon" class="icon">♪</span>
         </div>
+        <a href="main2.html" class="home-button">HOME</a>
     </div>
 
-    <a href="main2.html" class="home-button">HOME</a>
+    <h1 class="page-title">6th month✨</h1>
 
-    <div class="gallery-container">
-        <h1 class="page-title">শুভ শারদীয়া</h1>
-
-        <div class="photo-box">
-            <img src="puja1.jpg" alt="A photo from my collection">
-        </div>
-        
-        <div class="divider"></div>
-
-        <div class="photo-box">
-            <img src="puja2.jpg" alt="A photo from my collection">
-        </div>
-
-        <div class="divider"></div>
-        
-        <div class="photo-box">
-            <img src="puja3.jpg" alt="A photo from my collection">
+    <div class="photo-gallery">
+        <div class="photo-box" data-img-src="image_6.jpg">
+            <img src="image_6.jpg" alt="A photo from my collection">
         </div>
 
         <div class="divider"></div>
 
-        <div class="photo-box">
-            <img src="puja4.jpg" alt="A photo from my collection">
+        <div class="photo-box" data-img-src="IMG_20250921_204925.jpg">
+            <img src="IMG_20250921_204925.jpg" alt="A photo from my collection">
         </div>
-
-        <div class="divider"></div>
-
-        <div class="photo-box">
-            <img src="puja5.jpg" alt="A photo from my collection">
-        </div>
-
-        <div class="divider"></div>
-
-        <div class="photo-box">
-            <img src="puja6.jpg" alt="A photo from my collection">
-        </div>
-
-        <div class="divider"></div>
-
-        <div class="photo-box">
-            <img src="puja7.jpg" alt="A photo from my collection">
-        </div>
-
-        <div class="divider"></div>
-
-        <div class="photo-box">
-            <img src="puja8.jpg" alt="A photo from my collection">
-        </div>
-        
-        <div class="divider"></div>
-
-        <div class="photo-box">
-            <img src="puja9.jpg" alt="A photo from my collection">
-        </div>
-        
-        <div class="divider"></div>
-
-        <div class="photo-box">
-            <img src="puja10.jpg" alt="A photo from my collection">
-        </div>
-         
-        <div class="divider"></div>
-
-        <div class="photo-box">
-            <img src="puja11.jpg" alt="A photo from my collection">
-        </div>
-         
-        <div class="divider"></div>
-
-        <div class="photo-box">
-            <img src="puja12.jpg" alt="A photo from my collection">
-        </div>
-         
-        <div class="divider"></div>
-
-        <div class="photo-box">
-            <img src="puja13.jpg" alt="A photo from my collection">
-        </div>
-         
-        <div class="divider"></div>
-
-        <div class="photo-box">
-            <img src="puja14.jpg" alt="A photo from my collection">
-        </div>
-         
-        <div class="divider"></div>
-
-        <div class="photo-box">
-            <img src="puja15.jpg" alt="A photo from my collection">
-        </div>
-         
-        <div class="divider"></div>
-
-        <div class="photo-box">
-            <img src="puja16.jpg" alt="A photo from my collection">
-        </div>
-         
-        <div class="divider"></div>
-
-        <div class="photo-box">
-            <img src="puja17.jpg" alt="A photo from my collection">
-        </div>
-         
-        <div class="divider"></div>
-
-        <div class="photo-box">
-            <img src="puja18.jpg" alt="A photo from my collection">
-        </div>
-           
-        <div class="divider"></div>
-
-        <div class="photo-box">
-            <img src="puja19.jpg" alt="A photo from my collection">
-        </div>
-         
-        <div class="divider"></div>
-
-        <div class="photo-box">
-            <img src="puja20.jpg" alt="A photo from my collection">
-        </div>
-         
-        <div class="divider"></div>
-
-        <div class="photo-box">
-            <img src="puja21.jpg" alt="A photo from my collection">
-        </div>
-         
-        <div class="divider"></div>
-
-        <div class="photo-box">
-            <img src="puja22.jpg" alt="A photo from my collection">
-        </div>
-         
-        <div class="divider"></div>
-
-        <div class="photo-box">
-            <img src="puja23.jpg" alt="A photo from my collection">
-        </div>
-         
-        <div class="divider"></div>
-
-        <div class="photo-box">
-            <img src="puja24.jpg" alt="A photo from my collection">
-        </div>
-         
-        <div class="divider"></div>
-
-        <div class="photo-box">
-            <img src="puja25.jpg" alt="A photo from my collection">
-        </div>
-         
-        <div class="divider"></div>
-
-        <div class="photo-box">
-            <img src="puja26.jpg" alt="A photo from my collection">
-        </div>
-        <div class="divider"></div>
-
-        <div class="photo-box">
-            <img src="puja27.jpg" alt="A photo from my collection">
-        </div>
-         
-        <div class="divider"></div>
-
-        <div class="photo-box">
-            <img src="puja28.jpg" alt="A photo from my collection">
-        </div>
-         
-        <div class="divider"></div>
-
-        <div class="photo-box">
-            <img src="puja29.jpg" alt="A photo from my collection">
-        </div>
-         
-        <div class="divider"></div>
-
-        <div class="photo-box">
-            <img src="puja30.jpg" alt="A photo from my collection">
-        </div>
-         
-        <div class="divider"></div>
-
-        <div class="photo-box">
-            <img src="puja31.jpg" alt="A photo from my collection">
-        </div>
-         
-        <div class="divider"></div>
-
-        <div class="photo-box">
-            <img src="puja32.jpg" alt="A photo from my collection">
-        </div>
-         
-        <div class="divider"></div>
-
-        <div class="photo-box">
-            <img src="puja33.jpg" alt="A photo from my collection">
-        </div>
-         
-        <div class="divider"></div>
-
-        <div class="photo-box">
-            <img src="puja34.jpg" alt="A photo from my collection">
-        </div>
-        
     </div>
-   <div class="divider"></div>
 
-        <div class="photo-box">
-            <img src="puja35.jpg" alt="A photo from my collection">
-        </div>
-         
-        <div class="divider"></div>
-
-        <div class="photo-box">
-            <img src="puja36.jpg" alt="A photo from my collection">
-        </div>
-           <div class="divider"></div>
-
-        <div class="photo-box">
-            <img src="puja37.jpg" alt="A photo from my collection">
-        </div>
-         
-        <div class="divider"></div>
-
-        <div class="photo-box">
-            <img src="puja38.jpg" alt="A photo from my collection">
-        </div>
-           <div class="divider"></div>
-
-        <div class="photo-box">
-            <img src="puja39.jpg" alt="A photo from my collection">
-        </div>
-         
-        <div class="divider"></div>
-
-        <div class="photo-box">
-            <img src="puja40.jpg" alt="A photo from my collection">
-        </div>
-        
+    <!-- Modal -->
+    <div id="myModal" class="modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="modalImage">
     </div>
-    </div>
-    </div>
+
     <script>
+        // Floating hearts
+        function createHeart() {
+            const heartsContainer = document.querySelector('.hearts-container');
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.textContent = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 5 + 5 + 's';
+            heartsContainer.appendChild(heart);
+            setTimeout(() => { heart.remove(); }, 10000);
+        }
+        setInterval(createHeart, 300);
+
+        // Music toggle
         const music = document.getElementById('background-music');
         const toggleBtn = document.getElementById('music-toggle-btn');
         const icon = document.getElementById('music-icon');
-
         let isPlaying = false;
-
         toggleBtn.addEventListener('click', () => {
             if (isPlaying) {
                 music.pause();
                 icon.textContent = '♪';
-                icon.classList.remove('pradip-icon');
-                toggleBtn.classList.add('music-note-state');
+                icon.classList.remove('heart-icon');
+                toggleBtn.classList.add('play-btn-circle');
             } else {
                 music.play();
-                icon.textContent = '🪔';
-                icon.classList.add('pradip-icon');
-                toggleBtn.classList.remove('music-note-state');
+                icon.textContent = '❤️';
+                icon.classList.add('heart-icon');
+                toggleBtn.classList.remove('play-btn-circle');
             }
             isPlaying = !isPlaying;
         });
+
+        // Modal logic (dblclick & double-tap)
+        const modal = document.getElementById("myModal");
+        const modalImg = document.getElementById("modalImage");
+        const photoBoxes = document.querySelectorAll('.photo-box');
+        const span = document.getElementsByClassName("close")[0];
+
+        photoBoxes.forEach(box => {
+            // Desktop double click
+            box.addEventListener('dblclick', () => {
+                modal.style.display = "block";
+                modalImg.src = box.getAttribute('data-img-src');
+            });
+
+            // Mobile double tap
+            let lastTap = 0;
+            box.addEventListener('touchend', (e) => {
+                const currentTime = new Date().getTime();
+                const tapLength = currentTime - lastTap;
+                if (tapLength < 300 && tapLength > 0) {
+                    modal.style.display = "block";
+                    modalImg.src = box.getAttribute('data-img-src');
+                    e.preventDefault();
+                }
+                lastTap = currentTime;
+            });
+        });
+
+        // Close modal
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+        modal.onclick = function(event) {
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        }
     </script>
 </body>
 </html>
