@@ -6,7 +6,6 @@
     <title>Our First Date</title>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* 1. Background upgrade */
         body {
             background: linear-gradient(135deg, #FFDAB9, #FFC0CB);
             background-attachment: fixed;
@@ -22,7 +21,6 @@
             position: relative;
         }
 
-        /* 3. Subtle animation (Floating stars) */
         .stars-container {
             position: fixed;
             top: 0;
@@ -46,7 +44,6 @@
             100% { transform: translateY(-10vh) scale(1); opacity: 0; }
         }
 
-        /* 4. Title/Header style */
         .page-title {
             font-family: 'Dancing Script', cursive;
             font-size: 3rem;
@@ -57,7 +54,6 @@
             padding-top: 50px;
         }
 
-        /* Button container for positioning */
         .button-container {
             position: fixed;
             top: 20px;
@@ -69,7 +65,6 @@
             z-index: 1000;
         }
 
-        /* Home Button Styles */
         .home-button {
             padding: 10px 25px;
             text-decoration: none;
@@ -91,7 +86,6 @@
                         0 8px 20px rgba(0, 0, 0, 0.3);
         }
 
-        /* Music Toggle Button Styles */
         #music-toggle-btn {
             width: 50px;
             height: 50px;
@@ -128,7 +122,6 @@
             text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
         }
 
-        /* 5. Spacing and alignment */
         .photo-gallery {
             display: flex;
             flex-direction: column;
@@ -138,7 +131,6 @@
             margin-top: 100px;
         }
         
-        /* 2. Photo frame effect */
         .photo-box {
             margin: 20px 0;
             background-color: rgba(255, 255, 255, 0.3);
@@ -151,7 +143,6 @@
             cursor: pointer;
         }
         
-        /* 9. Hover animations on photos */
         .photo-box:hover {
             transform: scale(1.05);
             box-shadow: 0 0 20px rgba(255, 105, 180, 0.8);
@@ -161,9 +152,9 @@
             width: 100%;
             height: auto;
             border-radius: 8px;
+            user-select: none;
         }
         
-        /* 8. Section dividers */
         .divider {
             width: 80%;
             height: 2px;
@@ -181,6 +172,50 @@
         }
         .divider::before { left: -10px; }
         .divider::after { right: -10px; }
+
+        /* --- LIGHTBOX/MODAL STYLES --- */
+        .modal {
+            display: none; 
+            position: fixed;
+            z-index: 2000;
+            padding-top: 60px;
+            left: 0;
+            top: 0;
+            width: 100%; 
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.9);
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            width: 90%;
+            max-width: 700px;
+            animation: zoom 0.6s;
+        }
+
+        @keyframes zoom {
+            from {transform:scale(0.5)} 
+            to {transform:scale(1)}
+        }
+
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -225,8 +260,14 @@
         </div>
     </div>
 
+    <!-- Modal for enlarged images -->
+    <div id="myModal" class="modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+
     <script>
-        // JavaScript for subtle animation (floating stars)
+        // Floating stars
         function createStar() {
             const starsContainer = document.querySelector('.stars-container');
             const star = document.createElement('div');
@@ -235,19 +276,14 @@
             star.style.left = Math.random() * 100 + 'vw';
             star.style.animationDuration = Math.random() * 5 + 5 + 's';
             starsContainer.appendChild(star);
-
-            setTimeout(() => {
-                star.remove();
-            }, 10000);
+            setTimeout(() => star.remove(), 10000);
         }
-
         setInterval(createStar, 300);
 
-        // Music control functionality
+        // Music toggle
         const music = document.getElementById('background-music');
         const toggleBtn = document.getElementById('music-toggle-btn');
         const icon = document.getElementById('music-icon');
-
         let isPlaying = false;
 
         toggleBtn.addEventListener('click', () => {
@@ -257,9 +293,7 @@
                 icon.classList.remove('star-icon');
                 toggleBtn.classList.add('play-btn-circle');
             } else {
-                music.play().catch(error => {
-                    console.error("Music play failed:", error);
-                });
+                music.play().catch(err => console.error("Music play failed:", err));
                 icon.textContent = '⭐';
                 icon.classList.add('star-icon');
                 toggleBtn.classList.remove('play-btn-circle');
@@ -267,35 +301,37 @@
             isPlaying = !isPlaying;
         });
 
-        // 🌟 Double-Tap/Double-Click Feature with Fix 🌟
+        // ⭐ Double-tap / Double-click Modal ⭐
+        const modal = document.getElementById("myModal");
+        const modalImg = document.getElementById("modalImage");
+        const span = document.getElementsByClassName("close")[0];
         const images = document.querySelectorAll('.double-tap-img');
 
         images.forEach(img => {
             // Desktop double-click
-            img.addEventListener('dblclick', function(event) {
-                event.preventDefault(); 
-                openImageInNewViewer(this.src);
+            img.addEventListener('dblclick', function(e) {
+                e.preventDefault();
+                modal.style.display = "block";
+                modalImg.src = this.src;
             });
 
             // Mobile double-tap
             let lastTap = 0;
-            img.addEventListener('touchend', function(event) {
+            img.addEventListener('touchend', function(e) {
                 const currentTime = new Date().getTime();
                 const tapLength = currentTime - lastTap;
-                
                 if (tapLength < 300 && tapLength > 0) {
-                    event.preventDefault();
-                    openImageInNewViewer(this.src);
+                    e.preventDefault();
+                    modal.style.display = "block";
+                    modalImg.src = this.src;
                 }
                 lastTap = currentTime;
             });
         });
 
-        function openImageInNewViewer(imageUrl) {
-            // New function: Redirects to viewer.html and passes the image URL
-            const viewerUrl = `viewer.html?img=${encodeURIComponent(imageUrl)}`;
-            window.open(viewerUrl, '_blank');
-        }
+        // Close modal
+        span.onclick = () => modal.style.display = "none";
+        modal.onclick = (e) => { if (e.target === modal) modal.style.display = "none"; }
     </script>
 </body>
 </html>
